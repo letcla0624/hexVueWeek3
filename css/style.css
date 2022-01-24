@@ -1,0 +1,49 @@
+body {
+  background-color: #ffe0e0;
+}
+.mainPic img {
+  height: 308px;
+  width: 100%;
+  object-fit: cover;
+}
+.otherPics img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+.form-check-input:checked {
+  background-color: var(--bs-warning);
+  border-color: var(--bs-warning);
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+#app {
+  height: 100vh;
+}
+.rounded-4 {
+  border-radius: 0.8rem;
+}
+.form-floating > .form-control:focus {
+  box-shadow: none !important;
+  border-bottom: 2px solid var(--bs-secondary) !important;
+}
+.card img {
+  object-fit: cover;
+  width: 100%;
+}
+.card__showPwd {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  cursor: pointer;
+}
+.text-hover-warning:hover {
+  color: var(--bs-warning) !important;
+}
+.btn:focus, .form-select:focus{
+  box-shadow: none !important;
+}
+.fs-7 {
+  font-size: 14px;
+}

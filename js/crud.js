@@ -110,7 +110,7 @@ const app = createApp({
       this.newTemp.imagesUrl.push("");
     },
     // modal 裡刪除其餘圖片
-    delPics(key, dp) {
+    delPics(key) {
       this.newTemp.imagesUrl.splice(key, 1);
     },
     // 開啟 modal

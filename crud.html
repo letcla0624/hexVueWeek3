@@ -112,7 +112,7 @@
                         :alt="`${temp.category}${Number.parseInt(idx)+1}`"
                         class="rounded cursor-pointer me-2 mt-2"
                         @click="changeImg($event)"
-                        :class="{'border': pics==temp.imageUrl, 'border-danger': pics==temp.imageUrl, 'border-2': pics==temp.imageUrl}"
+                        :class="[{ 'border': pics === temp.imageUrl }, { 'border-danger': pics === temp.imageUrl }, { 'border-2': pics === temp.imageUrl }]"
                       />
                     </template>
                   </div>
@@ -121,18 +121,18 @@
                   <div class="card border-0 bg-transparent">
                     <div class="card-body px-0">
                       <div class="d-flex align-items-center">
-                        <h2 class="h2 mb-0">{{temp.title}}</h2>
+                        <h2 class="h2 mb-0">{{ temp.title }}</h2>
                         <span
                           class="badge rounded-pill bg-warning fs-6 text-dark ms-2 px-3"
-                          >{{temp.category}}</span
+                          >{{ temp.category }}</span
                         >
                       </div>
-                      <p class="fs-5 mt-1">{{temp.description}}</p>
+                      <p class="fs-5 mt-1">{{ temp.description }}</p>
                       <div class="row align-items-lg-end mt-lg-5">
                         <div class="col-lg-5">
-                          <p class="mb-2">{{temp.content}}</p>
+                          <p class="mb-2">{{ temp.content }}</p>
                           <p class="mb-0 mb-lg-2">
-                            限量：{{temp.num}}{{temp.unit}}
+                            限量：{{ temp.num }}{{ temp.unit }}
                           </p>
                         </div>
                         <div class="col-lg-7">
@@ -141,7 +141,7 @@
                             ><strong class="fs-2 text-danger"
                               >{{temp.price}}</strong
                             ><del class="text-secondary ms-2"
-                              >NT$ {{temp.origin_price}}</del
+                              >NT$ {{ temp.origin_price }}</del
                             >
                             {{ temp.unit }} / 元
                           </p>
@@ -225,7 +225,7 @@
                             :key="category"
                             :value="category"
                           >
-                            {{category}}
+                            {{ category }}
                           </option>
                         </select>
                         <label for="categories"
@@ -314,7 +314,7 @@
                       :false-value="0"
                     />
                     <label class="form-check-label" for="is_enabled">
-                      {{newTemp.is_enabled ? '啟用' : '不啟用'}}
+                      {{ newTemp.is_enabled ? '啟用' : '不啟用 '}}
                     </label>
                   </div>
                 </div>
@@ -403,12 +403,12 @@
               <button
                 type="button"
                 class="btn"
-                :class="{ 'btn-dark': isNew, 'btn-warning': !isNew }"
+                :class="[{ 'btn-dark': isNew }, { 'btn-warning': !isNew }]"
                 @click="upProdBtn"
               >
                 <i
                   class="bi me-2"
-                  :class="{ 'bi-check-lg': isNew, 'bi-check-all': !isNew }"
+                  :class="[{ 'bi-check-lg': isNew }, { 'bi-check-all': !isNew }]"
                 ></i
                 >{{ isNew ? '確定新增' : '確定修改' }}
               </button>
@@ -430,7 +430,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="errorModalLabel">{{errTitle}}</h5>
+                <h5 class="modal-title" id="errorModalLabel">{{ errTitle }}</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -467,7 +467,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="delModalLabel">{{errTitle}}</h5>
+                <h5 class="modal-title" id="delModalLabel">{{ errTitle }}</h5>
                 <button
                   type="button"
                   class="btn-close"

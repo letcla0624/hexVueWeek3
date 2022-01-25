@@ -401,20 +401,16 @@
                 取消
               </button>
               <button
-                v-if="isNew"
                 type="button"
-                class="btn btn-dark"
-                @click="newProdBtn"
-              >
-                <i class="bi bi-check-lg me-2"></i>確定新增
-              </button>
-              <button
-                v-else
-                type="button"
-                class="btn btn-warning"
+                class="btn"
+                :class="{ 'btn-dark': isNew, 'btn-warning': !isNew }"
                 @click="upProdBtn"
               >
-                <i class="bi bi-check-all me-2"></i>確定修改
+                <i
+                  class="bi me-2"
+                  :class="{ 'bi-check-lg': isNew, 'bi-check-all': !isNew }"
+                ></i
+                >{{ isNew ? '確定新增' : '確定修改' }}
               </button>
             </div>
           </div>

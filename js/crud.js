@@ -72,30 +72,17 @@ const app = createApp({
           this.errTitle = err.response.data.message;
         });
     },
-    // 新增商品按鈕
-    newProdBtn() {
-      this.isLoading = true;
-      axios
-        .post(`${this.api_url}/api/${this.api_path}/admin/product`, {
-          data: this.newTemp,
-        })
-        .then((res) => {
-          this.successMsg(res);
-          prodModal.hide();
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          alert(err.response.data.message);
-        });
-    },
-    // 更新商品按鈕
+    // 新增／更新商品按鈕
     upProdBtn() {
       this.isLoading = true;
-      axios
-        .put(
-          `${this.api_url}/api/${this.api_path}/admin/product/${this.newTemp.id}`,
-          { data: this.newTemp }
-        )
+      let api = `${this.api_url}/api/${this.api_path}/admin/product`;
+      let httpMethod = "post";
+
+      if (!this.isNew) {
+        api = `${this.api_url}/api/${this.api_path}/admin/product/${this.newTemp.id}`;
+        httpMethod = "put";
+      }
+      axios[httpMethod](api, { data: this.newTemp })
         .then((res) => {
           this.successMsg(res);
           prodModal.hide();
@@ -121,7 +108,6 @@ const app = createApp({
         prodModal.show();
       } else {
         this.isNew = false;
-        this.newTemp = { ...item };
         // 判斷有沒有其他圖片，有的話要將放在陣列裡的主圖片刪除
         if (
           item.imageUrl !== undefined &&
@@ -130,14 +116,16 @@ const app = createApp({
         ) {
           item.imagesUrl.shift();
         }
+        this.newTemp = JSON.parse(JSON.stringify(item));
         prodModal.show();
       }
     },
     // 點擊取消或直接關閉 modal 不做變更時，把主圖片重新加入其他圖片陣列裡
     noChange(item) {
       if (item.imagesUrl !== undefined) {
-        return item.imagesUrl.unshift(item.imageUrl);
+        item.imagesUrl.unshift(item.imageUrl);
       }
+      this.temp.imagesUrl = item.imagesUrl;
     },
     // 關閉 modal 訊息
     closeDel() {

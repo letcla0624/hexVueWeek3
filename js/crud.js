@@ -39,16 +39,10 @@ const app = createApp({
     // 取得商品
     getData() {
       axios
-        .get(`${this.api_url}/api/${this.api_path}/admin/products`)
+        .get(`${this.api_url}/api/${this.api_path}/admin/products/all`)
         .then((res) => {
           this.isLoading = false;
           this.products = res.data.products;
-          // 將 imageUrl 增加到 imagesUrl 陣列的第一張
-          this.products.forEach((item) => {
-            if (item.imagesUrl !== undefined) {
-              return item.imagesUrl.unshift(item.imageUrl);
-            }
-          });
         })
         .catch((err) => {
           this.isLoading = false;
@@ -108,24 +102,9 @@ const app = createApp({
         prodModal.show();
       } else {
         this.isNew = false;
-        // 判斷有沒有其他圖片，有的話要將放在陣列裡的主圖片刪除
-        if (
-          item.imageUrl !== undefined &&
-          item.imagesUrl !== undefined &&
-          item.imagesUrl[0] === item.imageUrl
-        ) {
-          item.imagesUrl.shift();
-        }
-        this.newTemp = JSON.parse(JSON.stringify(item));
+        this.newTemp = { ...item };
         prodModal.show();
       }
-    },
-    // 點擊取消或直接關閉 modal 不做變更時，把主圖片重新加入其他圖片陣列裡
-    noChange(item) {
-      if (item.imagesUrl !== undefined) {
-        item.imagesUrl.unshift(item.imageUrl);
-      }
-      this.temp.imagesUrl = item.imagesUrl;
     },
     // 關閉 modal 訊息
     closeDel() {

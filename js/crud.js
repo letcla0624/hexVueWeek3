@@ -1,5 +1,6 @@
 const { createApp } = Vue;
 let prodModal = "";
+let delModal = "";
 const app = createApp({
   data() {
     return {
@@ -56,14 +57,11 @@ const app = createApp({
         .delete(`${this.api_url}/api/${this.api_path}/admin/product/${prodId}`)
         .then((res) => {
           this.successMsg(res);
+          delModal.hide();
           this.temp = this.products;
         })
         .catch((err) => {
-          this.isLoading = false;
-          // 跳出失敗 modal 訊息
-          this.del = true;
-          this.delSuccess = err.response.data.success;
-          this.errTitle = err.response.data.message;
+          this.errorMsg();
         });
     },
     // 新增／更新商品按鈕
@@ -82,8 +80,7 @@ const app = createApp({
           prodModal.hide();
         })
         .catch((err) => {
-          this.isLoading = false;
-          alert(err.response.data.message);
+          this.errorMsg(err);
         });
     },
     // modal 裡新增其餘圖片
@@ -100,10 +97,14 @@ const app = createApp({
         this.isNew = true;
         this.newTemp = {};
         prodModal.show();
-      } else {
+      } else if (txt === "edit") {
         this.isNew = false;
         this.newTemp = { ...item };
         prodModal.show();
+      } else {
+        this.isNew = false;
+        this.newTemp = { ...item };
+        delModal.show();
       }
     },
     // 關閉 modal 訊息
@@ -119,6 +120,13 @@ const app = createApp({
       this.errTitle = res.data.message;
       this.getData();
       this.temp = {};
+    },
+    // // 跳出失敗 modal 訊息
+    errorMsg(err) {
+      this.isLoading = false;
+      this.del = true;
+      this.delSuccess = err.response.data.success;
+      this.errTitle = err.response.data.message;
     },
     // 關閉驗證失敗 modal 訊息，並重新導回登入頁
     closeErr() {
@@ -139,6 +147,7 @@ const app = createApp({
   mounted() {
     // 取得 modal
     prodModal = new bootstrap.Modal(document.querySelector("#prodModal"));
+    delModal = new bootstrap.Modal(document.querySelector("#delModal"));
   },
 })
   .use(VueLoading.Plugin)

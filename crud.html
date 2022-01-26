@@ -87,7 +87,7 @@
                       <button
                         type="button"
                         class="btn btn-outline-danger m-1 ms-0"
-                        @click="delProdBtn(item.id)"
+                        @click="openModal('delete', item)"
                       >
                         <i class="bi bi-trash-fill"></i>
                       </button>
@@ -415,6 +415,102 @@
         </div>
       </div>
 
+      <!-- Delete Modal -->
+      <div
+        class="modal fade"
+        id="delModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="delModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="delModalLabel">
+                <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i
+                >熊孩子，您確定要刪除<span class="text-danger mx-1"
+                  >{{newTemp.title}}</span
+                >嗎？
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">刪除之後資料不可逆，不可反悔喔！</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-link text-decoration-none text-secondary"
+                data-bs-dismiss="modal"
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="delProdBtn(newTemp.id)"
+              >
+                <i class="bi bi-trash-fill me-1"></i>確定刪除
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 更新/刪除後跳出成功或失敗 model -->
+      <template v-if="del">
+        <div class="modal-backdrop show"></div>
+        <div
+          class="modal"
+          id="showDelModal"
+          tabindex="-1"
+          aria-labelledby="showDelModalLabel"
+          style="display: block"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="showDelModalLabel">
+                  {{ errTitle }}
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  @click="closeDel"
+                ></button>
+              </div>
+              <div class="modal-footer">
+                <button
+                  v-if="delSuccess === true"
+                  type="submit"
+                  class="btn btn-warning"
+                  data-bs-dismiss="modal"
+                  @click="closeDel"
+                >
+                  我知道了
+                </button>
+                <button
+                  v-else
+                  type="submit"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  @click="closeDel"
+                >
+                  關閉
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
       <!-- Error Modal -->
       <template v-if="showErr">
         <div class="modal-backdrop show"></div>
@@ -443,53 +539,6 @@
                   class="btn btn-danger"
                   data-bs-dismiss="modal"
                   @click="closeErr"
-                >
-                  關閉
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <!-- Delete Modal -->
-      <template v-if="del">
-        <div class="modal-backdrop show"></div>
-        <div
-          class="modal"
-          id="delModal"
-          tabindex="-1"
-          aria-labelledby="delModalLabel"
-          style="display: block"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="delModalLabel">{{ errTitle }}</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  @click="closeDel"
-                ></button>
-              </div>
-              <div class="modal-footer">
-                <button
-                  v-if="delSuccess === true"
-                  type="submit"
-                  class="btn btn-warning"
-                  data-bs-dismiss="modal"
-                  @click="closeDel"
-                >
-                  我知道了
-                </button>
-                <button
-                  v-else
-                  type="submit"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                  @click="closeDel"
                 >
                   關閉
                 </button>
